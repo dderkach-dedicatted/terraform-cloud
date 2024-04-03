@@ -14,6 +14,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "main" {
-  name     =  var.rg_name
+  name     =  "${var.rg_name}-${terraform.workspace}"
   location = "East US"
 }
