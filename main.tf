@@ -13,7 +13,31 @@ provider "azurerm" {
   features {}
 }
 
+variable "groups" {
+  type = map(object({
+    image                 = string
+    startup_cmd           = string
+    memory                = number
+    memoryreservation     = number
+    task_port             = number
+    container_init_process = string
+    desired_count         = number
+    enable_lb             = bool
+  }))
+  default = {
+    "first-dderkach" = {
+      rg_name = "first-dderkach-${terraform.workspace}"
+      location = "South Central US"
+    },
+    "second_dderkach" = {
+      rg_name = "second-dderkach-${terraform.workspace}"
+      location = "East US"
+    }
+  }
+}
+
 resource "azurerm_resource_group" "main" {
-  name     =  "${var.rg_name}-${terraform.workspace}"
-  location = "East US"
+  for_each = var.groups
+  name     =  each.value["rg_name"]
+  location =  each.value["location"]
 }
