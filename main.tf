@@ -14,7 +14,10 @@ provider "azurerm" {
 }
 
 variable "groups" {
-  type = map(object({}))
+  type = map(object({
+    rg_name = string
+    location = string
+  }))
   default = {
     "first-dderkach" = {
       rg_name = "first-dderkach"
