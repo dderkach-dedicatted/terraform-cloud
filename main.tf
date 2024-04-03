@@ -32,6 +32,6 @@ variable "groups" {
 
 resource "azurerm_resource_group" "main" {
   for_each = var.groups
-  name     =  "each.value["rg_name"]-${terraform.workspace}"
-  location =  each.value["location"]
+  name     = "${each.value["rg_name"]}-${terraform.workspace}"
+  location = each.value["location"]
 }
