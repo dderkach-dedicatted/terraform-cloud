@@ -20,24 +20,19 @@ variable "groups" {
   }))
   default = {
     "first-dderkach" = {
-      rg_name = "first-dderkach"
+      rg_name = "first-dderkach-common-rg"
       location = "South Central US"
     },
     "second_dderkach" = {
-      rg_name = "second-dderkach"
+      rg_name = "second-dderkach-common-rg"
       location = "East US"
     }
   }
 }
 
-resource "azurerm_resource_group" "main" {
-  for_each = var.groups
-  name     = "${each.value["rg_name"]}-${terraform.workspace}"
-  location = each.value["location"]
-}
+module "common_rg" {
+  source = "../../modules/resource_group"
+  groups = var.groups
 
-resource "azurerm_resource_group" "second" {
-  name     = var.rg_name
-  location = "West Europe"
 }
 
