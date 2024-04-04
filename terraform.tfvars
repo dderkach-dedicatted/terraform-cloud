@@ -1,6 +1,6 @@
 groups = {
     "first-dderkach" = {
-      rg_name = "first-dderkach"
+      rg_name = "first-dderkach-tfvars"
       location = "South Central US"
     },
     "second_dderkach" = {
