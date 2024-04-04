@@ -14,16 +14,24 @@ provider "azurerm" {
 }
 
 variable "groups" {
-  type    = map(string)
+  type = map(object({
+    rg_name = string
+    location = string
+  }))
   default = {
-    "first-dderkach"  = "South Central US"
-    "second-dderkach" = "West Europe"
-    "third-dderkach"  = "West Europe"
+    "first-dderkach" = {
+      rg_name = "first-dderkach"
+      location = "South Central US"
+    },
+    "second_dderkach" = {
+      rg_name = "second-dderkach"
+      location = "East US"
+    }
   }
 }
 
 resource "azurerm_resource_group" "main" {
   for_each = var.groups
-  name     = "${each.key}-${terraform.workspace}"
-  location = each.value
+  name     = "${each.value["rg_name"]}-${terraform.workspace}"
+  location = each.value["location"]
 }
