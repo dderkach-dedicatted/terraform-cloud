@@ -35,3 +35,9 @@ resource "azurerm_resource_group" "main" {
   name     = "${each.value["rg_name"]}-${terraform.workspace}"
   location = each.value["location"]
 }
+
+resource "azurerm_resource_group" "second" {
+  name     = var.rg_name
+  location = "West Europe"
+}
+
